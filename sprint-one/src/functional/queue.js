@@ -1,6 +1,7 @@
 var Queue = function() {
   var someInstance = {};
   var counter = 0;
+  var processed = 0;
   // Use an object with numeric keys to store values
   var storage = {};
 
@@ -11,22 +12,18 @@ var Queue = function() {
     counter++; 
   };
 
-//{0:a, 1:b}
-//deque--> remove a--> {0:b}
-//add c and dequee --> {0:b, 1:c} then {0:c}
   someInstance.dequeue = function() {
-    if (counter > 0){
-      counter--;
-      var ans = storage[0];
-      for (var i = 0; i < counter; i++){
-        storage[i] = storage[i +1];
-      }
-      return ans;
+    if (processed < counter) {
+      var result = storage[processed];
+      delete storage[processed];
+      processed++;
+      return result;
     }
   };
 
   someInstance.size = function() {
-    return counter;
+    var size = counter - processed;
+    return size;
   };
 
   return someInstance;
