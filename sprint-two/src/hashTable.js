@@ -9,19 +9,16 @@ HashTable.prototype.insert = function(k, v) {
   var keyValuePair = {};
   keyValuePair[k] = v;
   if (!!hashTableStorage.get(newHashIndex)) { // is the newHashIndex already taken in storage array
-
-
     hashTableStorage.each(function(storageKeyValuePair, storageHashedIndex, storage) {
       if (storageHashedIndex === newHashIndex) {
         if (!!storageKeyValuePair[k]) {
           hashTableStorage.set(newHashIndex, keyValuePair); //overwrite
         } else {
-          
+          var combinedKeyValuePair = _.extend(storageKeyValuePair, keyValuePair);
+          hashTableStorage.set(newHashIndex, combinedKeyValuePair);
         }
       }
     });
-
-
   } else {
     hashTableStorage.set(newHashIndex, keyValuePair);
   }
