@@ -29,18 +29,32 @@ var LinkedList = function() {
     var pointer;
     if (this.head) {
       pointer = this.head;
-    } else {
-      pointer = this;
-    }
-    if (pointer) {
+    } 
+    while (pointer) {
       if (pointer.value === target) {
         return true;
       }
-      if (pointer.next) {
-        return list.contains.call(pointer.next, target);
-      }
+      pointer = pointer.next;
     }
     return false;
+
+    //recursive way to do contains method
+    // var pointer;
+    // if (this.head) {
+    //       pointer = this.head;
+    //     } 
+    // // else {
+    //   pointer = this;
+    // }
+    // if (pointer) {
+    //   if (pointer.value === target) {
+    //     return true;
+    //   }
+    //   if (pointer.next) {
+    //     return list.contains.call(pointer.next, target);
+    //   }
+    // }
+    // return false;
   };
 
   return list;
