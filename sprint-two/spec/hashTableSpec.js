@@ -6,7 +6,7 @@ describe('hashTable', function() {
   beforeEach(function() {
     hashTable = new HashTable();
   });
-
+  
   it('should have methods named "insert", "remove", and "retrieve', function() {
     expect(hashTable.insert).to.be.a('function');
     expect(hashTable.remove).to.be.a('function');
@@ -48,6 +48,24 @@ describe('hashTable', function() {
     expect(hashTable.retrieve(v1)).to.equal(v1);
     expect(hashTable.retrieve(v2)).to.equal(v2);
     window.getIndexBelowMaxForKey = oldHashFunction;
+  });
+
+  it ('should reHash', function() {
+    //reHash an array given a limit
+    _.each(people, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      hashTable.insert(firstName, lastName);
+      expect(hashTable.retrieve(firstName)).to.equal(lastName);
+    });
+    hashTable = hashTable.reHash(16);
+    expect(hashTable._limit).to.equal(16);
+    _.each(people, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      expect(hashTable.retrieve(firstName)).to.equal(lastName);
+    });
+    //expect(hashTable.fill)
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)

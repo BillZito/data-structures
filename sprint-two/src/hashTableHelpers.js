@@ -34,7 +34,7 @@ var LimitedArray = function(limit) {
       throw new Error('setter requires a numeric index for its first argument');
     }
     if (limit <= index) {
-      throw new Error('Error trying to access an over-the-limit index');
+      //throw new Error('Error trying to access an over-the-limit index');
     }
   };
 
