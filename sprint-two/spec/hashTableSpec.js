@@ -31,8 +31,11 @@ describe('hashTable', function() {
 
   it('should not contain values that were removed', function() {
     hashTable.insert('Steven', 'Tyler');
+    hashTable.insert('Lio', 'Messi');
     hashTable.remove('Steven');
     expect(hashTable.retrieve('Steven')).to.equal(undefined);
+    //this is a key second test to make sure you didn't delete all of them
+    expect(hashTable.retrieve('Lio')).to.equal('Messi');
   });
 
   it('should handle hash function collisions', function() {
@@ -48,7 +51,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -58,7 +61,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
