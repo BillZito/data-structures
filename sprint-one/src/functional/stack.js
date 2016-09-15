@@ -11,10 +11,10 @@ var Stack = function() {
   };
 //0: a, 1:b
   someInstance.pop = function() {
-    if (counter > 0){
-     counter--;
-     var val = storage[counter];
-     return val;
+    if (counter > 0) {
+      counter--;
+      var val = storage[counter];
+      return val;
     } 
   };
 
