@@ -58,7 +58,7 @@ describe('hashTable', function() {
       hashTable.insert(firstName, lastName);
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
-    hashTable = hashTable.reHash(16);
+    hashTable.reHash(16);
     expect(hashTable._limit).to.equal(16);
     _.each(people, function(person) {
       var firstName = person[0];

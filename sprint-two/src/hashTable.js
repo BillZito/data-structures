@@ -39,7 +39,7 @@ HashTable.prototype.insert = function(k, v) {
   }
   //this._limit = hashTableLimit;
   this._fill = hashTableFill;
-  this = this.reHash(hashTableLimit);
+  //this.reHash(hashTableLimit);
 
   //console.log('limit fill', hashTableLimit, this._fill);
 };
@@ -74,7 +74,7 @@ HashTable.prototype.remove = function(k) {
   });
   //this._limit = hashTableLimit;
   this._fill = hashTableFill;
-  this = this.reHash(hashTableLimit);
+  //this.reHash(hashTableLimit);
   //console.log('limit fill', this._limit, this._fill);
 
 };
@@ -90,7 +90,10 @@ HashTable.prototype.reHash = function(limit) {
       newHashTable.insert(storageKey, storageValue);
     });
   });
-  return newHashTable;
+  this._limit = hashTableLimit;
+  this._storage = newHashTable._storage;
+  this._fill = newHashTable._fill;
+  console.log(this._limit, this._storage, this._fill);
 };
 
 /*
