@@ -58,16 +58,30 @@ describe('hashTable', function() {
       hashTable.insert(firstName, lastName);
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
-    hashTable.reHash(16);
+    hashTable._limit = 16;
+    hashTable.reHash();
     expect(hashTable._limit).to.equal(16);
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
+      console.log();
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
     //expect(hashTable.fill)
   });
+/*
+  it ('should resize', function() {
+    hashTable._limit = 8;
+    hashTable._fill = 7;
+    hashTable.resize();
+    expect(hashTable._limit).to.equal(16);
 
+    hashTable._limit = 16;
+    hashTable._fill = 2;
+    hashTable.resize();
+    expect(hashTable._limit).to.equal(8);
+  });
+*/
   // (Advanced! Remove the extra "x" when you want the following tests to run)
   it ('should double in size when needed', function() {
     _.each(people, function(person) {
