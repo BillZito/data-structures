@@ -10,9 +10,11 @@ HashTable.prototype.insert = function(k, v) {
   var newHashIndex = getIndexBelowMaxForKey(k, hashTable._limit); // number between 0-8
   var keyValuePairArray = [k, v];
   if (!!hashTable._storage.get(newHashIndex)) { // is the newHashIndex already taken in storage array
+    
     hashTable._storage.each(function(storageArrayOfKeyValuePairArrays, storageHashedIndex) {
       if (storageHashedIndex === newHashIndex) {
         var found = false;
+
         _.each(storageArrayOfKeyValuePairArrays, function(storageKeyValuePairArray) {
           if (storageKeyValuePairArray[0] === k) {
             storageKeyValuePairArray[1] = v;
