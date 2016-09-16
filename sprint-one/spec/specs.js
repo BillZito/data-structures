@@ -20,7 +20,7 @@ define([
 
     var stack;
     var instantiator = variant === 'pseudoclassical' ? Stack : Stack;
-    var prototypeOfInstances = variant === 'prototypal' && stackMethods;
+    var prototypeOfInstances = variant === 'prototypal' && Stack.prototype;
 
     beforeEach(function() {
       if (variant === 'pseudoclassical') {
@@ -92,7 +92,7 @@ define([
   describe('queue', function() {
     var queue;
     var instantiator = variant === 'pseudoclassical' ? Queue : Queue;
-    var prototypeOfInstances = variant === 'prototypal' && queueMethods;
+    var prototypeOfInstances = variant === 'prototypal' && Queue.prototype;
 
     beforeEach(function() {
       if (variant === 'pseudoclassical') {

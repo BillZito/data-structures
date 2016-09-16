@@ -1,13 +1,11 @@
 var Stack = function() {
-  var stack = Object.create(stackMethods);
+  var stack = Object.create(Stack.prototype);
   stack.counter = 0;
   stack.storage = {};
   return stack;
 };
 
-var stackMethods = {};
-
-stackMethods.pop = function() {
+Stack.prototype.pop = function() {
   if (this.counter > 0) {
     this.counter--;
   }
@@ -15,11 +13,11 @@ stackMethods.pop = function() {
   return result;
 };
 
-stackMethods.push = function(value) {
+Stack.prototype.push = function(value) {
   this.storage[this.counter] = value;
   this.counter++;
 };
 
-stackMethods.size = function() {
+Stack.prototype.size = function() {
   return this.counter;
 };
