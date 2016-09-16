@@ -8,50 +8,66 @@ HashTable.prototype.insert = function(k, v) {
   var hashTable = this;
   var originalLimit = this._limit;
   var newHashIndex = getIndexBelowMaxForKey(k, hashTable._limit); // number between 0-8
-  var keyValuePair = {};
-  keyValuePair[k] = v;
+  var keyValuePairArray = [k, v];
   if (!!hashTable._storage.get(newHashIndex)) { // is the newHashIndex already taken in storage array
-    hashTable._storage.each(function(storageKeyValuePair, storageHashedIndex, storage) {
+    hashTable._storage.each(function(storageArrayOfKeyValuePairArrays, storageHashedIndex) {
       if (storageHashedIndex === newHashIndex) {
-        if (!!storageKeyValuePair[k]) {
-          hashTable._storage.set(newHashIndex, keyValuePair); //overwrite
-        } else {
-          var combinedKeyValuePair = _.extend(storageKeyValuePair, keyValuePair);
+        var found = false;
+        _.each(storageArrayOfKeyValuePairArrays, function(storageKeyValuePairArray) {
+          if (storageKeyValuePairArray[0] === k) {
+            storageKeyValuePairArray[1] = v;
+            found = true;
+          }
+        });
+        if (!found) {
+          //debugger;
+          storageArrayOfKeyValuePairArrays.push(keyValuePairArray);
+          //debugger;
           hashTable.double();
-          hashTable._storage.set(newHashIndex, combinedKeyValuePair);
           hashTable._fill++;
         }
       }
     });
   } else {
     hashTable.double();
-    hashTable._storage.set(newHashIndex, keyValuePair);
+    //debugger;
+    hashTable._storage.set(newHashIndex, [keyValuePairArray]);
+    //debugger;
     hashTable._fill++;
   }
   if (originalLimit !== hashTable._limit) {
     hashTable.reHash();
   }
+  //debugger;
 };
 
 
 HashTable.prototype.retrieve = function(k) {
   var hashTable = this;
   var index = getIndexBelowMaxForKey(k, hashTable._limit);
-  var keyValuePair = hashTable._storage.get(index);
-  if (!keyValuePair) {
-    return undefined;
-  }
-  return keyValuePair[k];
+  var arrayOfKeyValuePairArrays = hashTable._storage.get(index);
+  var val;
+  _.each(arrayOfKeyValuePairArrays, function(keyValuePairArray) {
+    if (keyValuePairArray[0] === k) {
+      // debugger;
+      val = keyValuePairArray[1];
+    }
+  });
+  return val;
 };
 
 HashTable.prototype.remove = function(k) {
   var hashTable = this;
   var index = getIndexBelowMaxForKey(k, hashTable._limit);
-  hashTable._storage.each(function(storageKeyValuePair, storageHashedIndex, storage) {
+  hashTable._storage.each(function(storageArrayOfKeyValuePairArrays, storageHashedIndex) {
     if (storageHashedIndex === index) {
-      delete storage[storageHashedIndex];
-      hashTable._fill--;
-      hashTable.half();
+      _.each(storageArrayOfKeyValuePairArrays, function(storageKeyValuePairArray, i) {
+        if (storageKeyValuePairArray[0] === k) {
+          storageArrayOfKeyValuePairArrays.splice(i, 1);
+          hashTable._fill--;
+          hashTable.half();
+        }
+      });
     }
   });
 };
@@ -60,10 +76,10 @@ HashTable.prototype.reHash = function() {
   var hashTable = this;
   var newHashTable = new HashTable(hashTable._limit);
   //for each keyvalue pair in hashtable storage
-  hashTable._storage.each(function(storageKeyValuePair, storageHashedIndex, storage) {
-    _.each(storageKeyValuePair, function(storageValue, storageKey, storageKeyValuePairs) {
+  hashTable._storage.each(function(storageArrayOfKeyValuePairArrays, storageHashedIndex, storage) {
+    _.each(storageArrayOfKeyValuePairArrays, function(storageKeyValuePairArray) {
       //for each keyvalue pair in the keyvalue pair
-      newHashTable.insert(storageKey, storageValue);
+      newHashTable.insert(storageKeyValuePairArray[0], storageKeyValuePairArray[1]);
     });
   });
   this._storage = newHashTable._storage;
