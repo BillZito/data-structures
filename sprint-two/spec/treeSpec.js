@@ -48,4 +48,28 @@ describe('tree', function() {
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
+
+  it('should call on all tree nodes in breadth first order', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    var array = [];
+    tree.traverseBFS(function(item) {
+      array.push(item);
+    });
+    expect(array).to.eql([4, 5, 6, 7, 8]);
+  });
+
+  it('should call on all tree nodes in depth first order', function() {
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    var array = [];
+    tree.traverseDFS(function(item) {
+      array.push(item);
+    });
+    expect(array).to.eql([4, 5, 7, 6, 8]);
+  });
 });

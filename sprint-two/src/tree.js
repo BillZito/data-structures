@@ -48,6 +48,28 @@ treeMethods.removeFromParent = function() {
   return result;
 };
 
+treeMethods.traverseBFS = function(cb) {
+  //first create an array with first item in it
+  var allTrees = [this];
+  //and then, were gonna like iterate through its children adding to array and calling it on them
+  for (var i = 0; i < allTrees.length; i++) {
+    cb(allTrees[i].value);
+    for (var j = 0; j < allTrees[i].children.length; j++) {
+      allTrees.push(allTrees[i].children[j]);
+    }
+  }
+};
+
+treeMethods.traverseDFS = function(cb) {
+  // call cb on current node
+  cb(this.value);
+  // loop through children and call traverseDFS on each one
+  for (var i = 0; i < this.children.length; i++) {
+    this.children[i].traverseDFS(cb);
+  }
+};
+
+
 /*
  * Complexity: What is the time complexity of the above functions?
  */
