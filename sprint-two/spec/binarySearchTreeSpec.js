@@ -52,4 +52,44 @@ describe('binarySearchTree', function() {
     expect(array).to.eql([5, 2, 7, 1, 4, 6, 8, 3]);
   });
 
+  it('should have calculated balance factors and parents', function() {
+    expect(binarySearchTree.balance).to.equal(0);
+    binarySearchTree.insert(2);
+    expect(binarySearchTree.balance).to.equal(-1);
+    expect(binarySearchTree.left.parent.value).to.equal(5);
+    binarySearchTree.insert(7);
+    expect(binarySearchTree.balance).to.equal(0);
+    binarySearchTree.insert(1);
+    expect(binarySearchTree.balance).to.equal(-1);
+    expect(binarySearchTree.left.balance).to.equal(-1);
+    expect(binarySearchTree.left.left.parent.value).to.equal(2);
+    binarySearchTree.insert(4);
+    expect(binarySearchTree.balance).to.equal(-2);
+  });
+
+  it('should rotate left', function() {
+    binarySearchTree.insert(6);
+    expect(binarySearchTree.balance).to.equal(1);
+    binarySearchTree.insert(7);
+    expect(binarySearchTree.balance).to.equal(2);
+    binarySearchTree.rotateLeft();
+    expect(binarySearchTree.balance).to.equal(0);
+    expect(binarySearchTree.parent).to.equal(6);
+    expect(binarySearchTree.parent.right).to.equal(7);
+  });
+
+  it('should rotate right', function() {
+    binarySearchTree.insert(4);
+    expect(binarySearchTree.balance).to.equal(-1);
+    binarySearchTree.insert(3);
+    expect(binarySearchTree.balance).to.equal(-2);
+    binarySearchTree.rotateRight();
+    expect(binarySearchTree.balance).to.equal(0);
+    expect(binarySearchTree.parent).to.equal(4);
+    expect(binarySearchTree.parent.left).to.equal(3);
+  });
+
+  it('should rebalance as soon as the max depth is more than twice the minimum depth', function() {
+    expect(false).to.equal(true);
+  });
 });

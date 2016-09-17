@@ -1,8 +1,10 @@
 var BinarySearchTree = function(value) {
   //set properties
   this.value = value;
+  this.parent = null;
   this.left = null; //bst
   this.right = null; //bst
+  this.balance = 0;
 };
 
 //prototypal
@@ -12,17 +14,20 @@ BinarySearchTree.prototype.insert = function(value) {
 
   //check which side
   if (value > this.value) {
-    //term case
+    this.balance++;
     if (this.right !== null) {
       this.right.insert(value);
     } else {
       this.right = bst;
+      this.right.parent = this;
     }
   } else {
+    this.balance--;
     if (this.left !== null) {
       this.left.insert(value);
     } else {
       this.left = bst;
+      this.left.parent = this;
     }
   }
 };
@@ -62,6 +67,19 @@ BinarySearchTree.prototype.breadthFirstLog = function(cb) {
   }
   
 };
+
+BinarySearchTree.prototype.reBalance = function() {
+
+};
+
+BinarySearchTree.prototype.rotateLeft = function() {
+
+};
+
+BinarySearchTree.prototype.rotateRight = function() {
+
+};
+
 /*
  * Complexity: What is the time complexity of the above functions?
  */
