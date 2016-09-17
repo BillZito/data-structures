@@ -24,4 +24,13 @@ describe('set', function() {
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
 
+  it('should be capable of handling numbers', function() {
+    set.add(3.14159265);
+    expect(set.contains(3.14159265)).to.equal(true);
+  });
+
+  it('should be capable of handling objects', function() {
+    set.add({'one': 1, 'two': 2});
+    expect(set.contains({'one': 1, 'two': 2})).to.equal(true);
+  });
 });
