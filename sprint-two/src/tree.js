@@ -18,21 +18,11 @@ treeMethods.addChild = function(value) {
 };
 
 treeMethods.contains = function(target) {
-  //check tree itself
-  var found = false;
-  if (this.value === target) {
-    return true;
-  }
-  //check it's children recursively
-  if (!found) {
-    _.each(this.children, function(childTree) {
-      found = found || childTree.contains(target);
-      if (found) {
-        return true;
-      }
-    });
-  }
-  return found;
+  return !!this.traverseBFS(function(treeValue) {
+    if (treeValue === target) {
+      return true;
+    }
+  });
 };
 
 treeMethods.removeFromParent = function() {
@@ -40,7 +30,6 @@ treeMethods.removeFromParent = function() {
   var result;
   _.each(this.parent.children, function(child, i, children) {
     if (child === toBeRemoved) {
-      // debugger; 
       toBeRemoved.parent = null;      
       result = children.splice(i, 1)[0];
     }
@@ -53,7 +42,9 @@ treeMethods.traverseBFS = function(cb) {
   var allTrees = [this];
   //and then, were gonna like iterate through its children adding to array and calling it on them
   for (var i = 0; i < allTrees.length; i++) {
-    cb(allTrees[i].value);
+    if (cb(allTrees[i].value)) {
+      return true;
+    }
     for (var j = 0; j < allTrees[i].children.length; j++) {
       allTrees.push(allTrees[i].children[j]);
     }
@@ -62,10 +53,14 @@ treeMethods.traverseBFS = function(cb) {
 
 treeMethods.traverseDFS = function(cb) {
   // call cb on current node
-  cb(this.value);
+  if (cb(this.value)) {
+    return true;  //this could also be return 'potatoes'
+  }
   // loop through children and call traverseDFS on each one
   for (var i = 0; i < this.children.length; i++) {
-    this.children[i].traverseDFS(cb);
+    if (this.children[i].traverseDFS(cb)) {
+      return true;
+    }
   }
 };
 
