@@ -4,6 +4,7 @@ var BinarySearchTree = function(value) {
   this.parent = null;
   this.left = null; //bst
   this.right = null; //bst
+  this.height = 0;
   this.balance = 0;
 };
 
@@ -72,8 +73,15 @@ BinarySearchTree.prototype.reBalance = function() {
 
 };
 
-BinarySearchTree.prototype.rotateLeft = function() {
 
+
+BinarySearchTree.prototype.rotateLeft = function() {
+  var current = this; 
+  var currentParent = this.parent;
+  var rightOfCurrent = this.right; 
+  rightOfCurrent.parent = currentParent;
+  rightOfCurrent.left = current; 
+  current.parent = rightOfCurrent; 
 };
 
 BinarySearchTree.prototype.rotateRight = function() {

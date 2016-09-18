@@ -74,8 +74,8 @@ describe('binarySearchTree', function() {
     expect(binarySearchTree.balance).to.equal(2);
     binarySearchTree.rotateLeft();
     expect(binarySearchTree.balance).to.equal(0);
-    expect(binarySearchTree.parent).to.equal(6);
-    expect(binarySearchTree.parent.right).to.equal(7);
+    expect(binarySearchTree.parent.value).to.equal(6);
+    expect(binarySearchTree.parent.right.value).to.equal(7);
   });
 
   it('should rotate right', function() {
@@ -85,8 +85,8 @@ describe('binarySearchTree', function() {
     expect(binarySearchTree.balance).to.equal(-2);
     binarySearchTree.rotateRight();
     expect(binarySearchTree.balance).to.equal(0);
-    expect(binarySearchTree.parent).to.equal(4);
-    expect(binarySearchTree.parent.left).to.equal(3);
+    expect(binarySearchTree.parent.value).to.equal(4);
+    expect(binarySearchTree.parent.left.value).to.equal(3);
   });
 
   it('should rebalance as soon as the max depth is more than twice the minimum depth', function() {
